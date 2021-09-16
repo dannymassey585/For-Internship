@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="https://unpkg.com/jquery@3.3.1/dist/jquery.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/web3@0.20.5/dist/web3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+
+</head>
+
+<body>
+
+    <div>
+		<hr>
+		<h1>Lucky Draw Contest</h1>
+		<hr>
+	</div>
+
+    <div class="container">
+
+        <h2>Enter 2 Ethers To Participate</h2>
+        <h3 id="initialPaymentReceive">Enter Your Address And Click To Participate</h3>
+		<input type="text" id="initialpayment" placeholder="Enter Address..">
+    	<input type="button" value="Participate" id="connect-button">
+		<hr>
+
+    </div>
+
+	<div class="container">
+
+        <h3 id="getparticipantno">Enter Your Address To Know Your Participant No.</h3>
+		<input type="text" id="participantadd" placeholder="Enter Address..">
+    	<input type="button" value="Enter" id="connect-button1">
+		<hr>
+
+    </div>
+
+	<div class="container">
+
+        <h3 id="checkuserexist">Enter Your Address To Know ,Whether You Have Participated In Contest Or Not!</h3>
+		<input type="text" id="checkuseradd" placeholder="Enter Address..">
+    	<input type="button" value="Enter" id="connect-button2">
+		<hr>
+
+    </div>
+
+	<div class="container">
+
+        <h2>Here The Winner Is Decided</h2>
+        <h3 id="paymoneytowinner">All The Amount Is Transfered To Winner's Account Address</h3>
+    	<input type="button" value="Enter" id="connect-button3">
+		<hr>
+
+    </div>
+
+    <script>
+
+			if(typeof web3 !== 'undefined'){
+            web3 = new Web3(window.ethereum);
+		
+        	} else{
+            web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+        	 }
+		
+		
+		
+         web3.eth.defaultAccount = web3.eth.accounts[0];
+
+		 var version1 = web3.version;
+		 console.log(version1)
+
+		 //var contract = new web3.eth.Contract(abi, contractAddress)
+
+		 const drawaddress = "0xD270f95Fd5A466f6c64e2b7ac2979189b9bd96B8";
+
+         var LuckyDraw = new web3.eth.Contract([
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "value",
+				"type": "uint256"
+			}
+		],
+		"name": "FundReceived",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "winner",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "value",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint8",
+				"name": "index",
+				"type": "uint8"
+			}
+		],
+		"name": "Winner",
+		"type": "event"
+	},
+	{
+		"constant": false,
+		"inputs": [],
+		"name": "InitialPaymentReceiver",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [],
+		"name": "PayMoney",
+		"outputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "constructor"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "uaddr",
+				"type": "address"
+			}
+		],
+		"name": "CheckUserExist",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "res",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "ADD",
+				"type": "address"
+			}
+		],
+		"name": "getParticipant",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+], drawaddress);
+console.log(LuckyDraw)
+
+/*var LuckyDraw = luckydrawcontract.at('0xce82F8eBDF54a7762c217F5Fe1ADc30d0F0caDB2');
+console.log(LuckyDraw);   */
+
+
+const myadd ="0xf8257C402b3595EC61a326Bfc20d1e0eaC33FA97"
+
+
+$("#connect-button").click(function(e){
+	var inipay = $("#initialpayment").val()
+    console.log(inipay)
+	LuckyDraw.methods.InitialPaymentReceiver()
+	.send({ from: inipay}, function (err, res) {
+    if (err) {
+      console.log("An error occured", err)
+	  alert("An error occured", err)
+      return
+    }
+    console.log("Congralution You have Participated In The Contest")
+	alert("Congralution You have Participated In The Contest")
+  })})
+ 
+
+
+$("#connect-button1").click(function(e){
+    var addre = $("#participantadd").val()
+    console.log(addre)
+    LuckyDraw.methods.getParticipant(addre).call(function (err, res){
+
+if (err) {
+	console.log("As You Have Not Participated You Dont have A Participant No. ", err)
+	alert("As You Have Not Participated You Dont have A Participant No.")
+	return
+}
+console.log("Your Participant No. Is : ", res)
+alert("Your Participant No. Is : ", res)
+})})
+
+
+
+$("#connect-button2").click(function(e){
+    var userexist = $("#checkuseradd").val()
+    console.log(userexist)
+    LuckyDraw.methods.CheckUserExist(userexist).call(function (err, res){
+
+	if (err) {
+		console.log("You Have Not Participated", err)
+		alert("You Have Not Participated")
+		return
+	}
+	console.log("You Already Have Participated", res)
+	alert("You Already Have Participated")
+})})
+
+$("#connect-button3").click(function(e){
+	LuckyDraw.methods.PayMoney()
+	.send({ from: myadd}, function (err, res) {
+    if (err) {
+      console.log("An error occured", err)
+	  alert("An error occured")
+      return
+    }
+    console.log("Congralution You Are The Winner Of The Contest" + res)
+	alert("Congralution You Are The Winner Of The Contest")
+  })})
+
+	
+	</script>
+
+</body>
+
+</html>
