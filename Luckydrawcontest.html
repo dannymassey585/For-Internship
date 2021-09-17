@@ -19,19 +19,9 @@
 
     <div class="container">
 
-        <h2>Enter 2 Ethers To Participate</h2>
-        <h3 id="initialPaymentReceive">Enter Your Address And Click To Participate</h3>
+        <h2 id="initialPaymentReceive">Enter Your Address And Click To Participate</h2>
 		<input type="text" id="initialpayment" placeholder="Enter Address..">
     	<input type="button" value="Participate" id="connect-button">
-		<hr>
-
-    </div>
-
-	<div class="container">
-
-        <h3 id="getparticipantno">Enter Your Address To Know Your Participant No.</h3>
-		<input type="text" id="participantadd" placeholder="Enter Address..">
-    	<input type="button" value="Enter" id="connect-button1">
 		<hr>
 
     </div>
@@ -72,9 +62,15 @@
 
 		 //var contract = new web3.eth.Contract(abi, contractAddress)
 
-		 const drawaddress = "0xD270f95Fd5A466f6c64e2b7ac2979189b9bd96B8";
+		 const drawaddress = "0x9848849Ef8e88c61eAE39bbf943B3Dc00e6fA65c";
 
          var LuckyDraw = new web3.eth.Contract([
+	{
+		"inputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "constructor"
+	},
 	{
 		"anonymous": false,
 		"inputs": [
@@ -120,6 +116,27 @@
 		"type": "event"
 	},
 	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "uaddr",
+				"type": "address"
+			}
+		],
+		"name": "CheckUserExist",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "res",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"constant": false,
 		"inputs": [],
 		"name": "InitialPaymentReceiver",
@@ -141,33 +158,6 @@
 		"outputs": [],
 		"payable": true,
 		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"payable": true,
-		"stateMutability": "payable",
-		"type": "constructor"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "uaddr",
-				"type": "address"
-			}
-		],
-		"name": "CheckUserExist",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "res",
-				"type": "bool"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -222,19 +212,19 @@ $("#connect-button").click(function(e){
  
 
 
-$("#connect-button1").click(function(e){
+/*$("#connect-button1").click(function(e){
     var addre = $("#participantadd").val()
     console.log(addre)
     LuckyDraw.methods.getParticipant(addre).call(function (err, res){
 
 if (err) {
-	console.log("As You Have Not Participated You Dont have A Participant No. ", err)
+	console.log("As You Have Not Participated You Dont have A Participant No. ", res)
 	alert("As You Have Not Participated You Dont have A Participant No.")
 	return
 }
 console.log("Your Participant No. Is : ", res)
 alert("Your Participant No. Is : ", res)
-})})
+})})*/
 
 
 
@@ -243,8 +233,8 @@ $("#connect-button2").click(function(e){
     console.log(userexist)
     LuckyDraw.methods.CheckUserExist(userexist).call(function (err, res){
 
-	if (err) {
-		console.log("You Have Not Participated", err)
+	if (res == false) {
+		console.log("You Have Not Participated", res)
 		alert("You Have Not Participated")
 		return
 	}
@@ -254,7 +244,7 @@ $("#connect-button2").click(function(e){
 
 $("#connect-button3").click(function(e){
 	LuckyDraw.methods.PayMoney()
-	.send({ from: myadd}, function (err, res) {
+	.send({ from: myadd }, function (err, res) {
     if (err) {
       console.log("An error occured", err)
 	  alert("An error occured")
