@@ -7,14 +7,14 @@ contract LuckyDraw{
     }
     mapping(address => participant) participantInfo;
     participant[] participants;
-    uint InitialRecvAmount = 2000000000000000000;
+    uint InitialRecvAmount = 200000000000000000;
     uint  internal totalAmount = 0;
     event FundReceived(address from, uint value);
     event Winner(address winner, uint value, uint8 index);
 
     //This modifer check that the minimum amount must be deposted to contract.
     modifier isSufficientAmount(){
-        require(msg.value == InitialRecvAmount, "please provide sufficient funds 2000000000000000000 wei");
+        require(msg.value == InitialRecvAmount, "please provide sufficient funds 200000000000000000 wei");
         _;
     }
 
@@ -51,7 +51,7 @@ contract LuckyDraw{
     */
     function CheckUserExist(address uaddr) public view  returns(bool res)  {
         res = false;
-        for (uint i = 0; i < 5; i++) {
+        for (uint i = 0; i < participants.length; i++) {
             if (uaddr == participants[i].addr) {
                 res = true;
             }
@@ -69,7 +69,7 @@ contract LuckyDraw{
     ;}
 
     function getParticipant(address ADD) public view   returns(address, uint256)   {
-        for (uint i = 0; i < 5; i++) {
+        for (uint i = 0; i < participants.length; i++) {
             if (participants[i].addr == ADD)
                 return (participants[i].addr, participants[i].amount);
 
@@ -77,7 +77,7 @@ contract LuckyDraw{
     }
 
     function random() internal view returns(uint8) {
-         return uint8(uint256(keccak256(abi.encodePacked(block.timestamp, block.difficulty))) % 5 );
+         return uint8(uint256(keccak256(abi.encodePacked(block.timestamp, block.difficulty))) % participants.length );
     }
 
 }
