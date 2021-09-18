@@ -29,9 +29,11 @@ contract LuckyDraw{
         emit FundReceived(msg.sender, msg.value);
     }
 
+    
+
     /* Recives the required Amount of funds from the user
     */
-    function InitialPaymentReceiver()  payable public isSufficientAmount   returns(bool ) {
+    function InitialPaymentReceiver()  payable public  returns(bool ) {
         uint val = msg.value;
         participant memory ptc;
         if (!(CheckUserExist(msg.sender))) {
