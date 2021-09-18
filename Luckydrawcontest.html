@@ -62,7 +62,7 @@
 
 		 //var contract = new web3.eth.Contract(abi, contractAddress)
 
-		 const drawaddress = "0x9848849Ef8e88c61eAE39bbf943B3Dc00e6fA65c";
+		 const drawaddress = "0x308e0043984cCa2c5e5ccE2285B71aa5e87b5a5F";
 
          var LuckyDraw = new web3.eth.Contract([
 	{
@@ -193,7 +193,7 @@ console.log(LuckyDraw)
 console.log(LuckyDraw);   */
 
 
-const myadd ="0xf8257C402b3595EC61a326Bfc20d1e0eaC33FA97"
+const myadd ="0xBD4eF4Cf17CD82a628C10Ba0F55ABaD1D5b7fAD1"
 
 
 $("#connect-button").click(function(e){
@@ -210,22 +210,6 @@ $("#connect-button").click(function(e){
 	alert("Congralution You have Participated In The Contest")
   })})
  
-
-
-/*$("#connect-button1").click(function(e){
-    var addre = $("#participantadd").val()
-    console.log(addre)
-    LuckyDraw.methods.getParticipant(addre).call(function (err, res){
-
-if (err) {
-	console.log("As You Have Not Participated You Dont have A Participant No. ", res)
-	alert("As You Have Not Participated You Dont have A Participant No.")
-	return
-}
-console.log("Your Participant No. Is : ", res)
-alert("Your Participant No. Is : ", res)
-})})*/
-
 
 
 $("#connect-button2").click(function(e){
